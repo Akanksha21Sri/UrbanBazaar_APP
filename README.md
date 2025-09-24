@@ -1,4 +1,4 @@
-# Maltimart Ecommerce
+# UrbanBazaar Ecommerce
 
 ## 📌 Live Demo
 https://UrbanBazaar-ecommerce.onrender.com
