@@ -1,9 +1,26 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
+// import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../app/features/cart/cartSlice";
+import { toggleWishlist } from "../app/features/cart/wishlistSlice";
+import { useNavigate } from "react-router-dom";
 
 const Wishlist = () => {
   const wishlist = useSelector((state) => state.wishlist.wishlist);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handelAdd = (productItem) => {
+      dispatch(addToCart({ product: productItem, num: 1 }));
+      toast.success("Product has been added to cart!");
+    };
+
+    const handleToggleWishlist = (productItem) => {
+      dispatch(toggleWishlist(productItem));
+      toast.info("Removed from wishlist!");
+    };
 
   return (
     <section className="wishlist-page py-5">
@@ -20,16 +37,28 @@ const Wishlist = () => {
             {wishlist.map((item, index) => (
               <Col md={4} sm={6} xs={12} key={item.id} className="mb-4">
                 <div className="card" key={index} style={{ width: "18rem" }}>
+                    <i
+                    className="bi bi-heart-fill text-danger"
+                    style={{
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      fontSize: "1.5rem",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleToggleWishlist(item)}
+                  ></i>
                   <img
                     // variant="top"
-                    src={item.image}
-                    alt={item.name}
-                    style={{ height: "200px", objectFit: "contain" }}
+                    src={item.imgUrl}
+                    alt={item.productName}
+                    style={{ height: "200px", objectFit: "contain", cursor: "pointer"}}
+                    onClick={() => navigate(`/shop/${item.id}`)}
                   />
                   <div className="card-body text-center">
-                    <h5 className="card-title">{item.name}</h5>
+                    <h5 className="card-title">{item.productName}</h5>
                     <p className="card-text">₹{item.price}</p>
-                    <button className="btn btn-dark" onClick={() => addToCart(item)}>
+                    <button className="btn btn-dark" onClick={() => handelAdd(item)}>
                       Add to Cart
                     </button>
                   </div>

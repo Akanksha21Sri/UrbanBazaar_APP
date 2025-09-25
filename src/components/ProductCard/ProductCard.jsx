@@ -47,7 +47,6 @@ const ProductCard = ({ title, productItem }) => {
         src={productItem.imgUrl}
         alt=""
       />
-      
       <div className="product-like" onClick={handleWishlist}>
         {isWishlisted ? (
           <ion-icon name="heart" style={{ color: "red" }}></ion-icon>
@@ -55,7 +54,6 @@ const ProductCard = ({ title, productItem }) => {
           <ion-icon name="heart-outline"></ion-icon>
         )}
       </div>
-
       <div className="product-details">
         <h3 onClick={() => handelClick()}>{productItem.productName}</h3>
         <div className="rate">
